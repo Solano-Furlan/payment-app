@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:payment_app/core/design_system/theme/colors.dart';
 import 'package:payment_app/core/design_system/widgets/buttons/toggle_button.widget.dart';
 import 'package:payment_app/core/design_system/widgets/texts/text.widget.dart';
-import 'package:payment_app/features/payments/presentation/widgets/beneficiary_card.widget.dart';
-import 'package:payment_app/features/payments/presentation/widgets/recharge_history_item.widget.dart';
+import 'package:payment_app/features/mobile_recharge/presentation/widgets/beneficiary_card.widget.dart';
+import 'package:payment_app/features/mobile_recharge/presentation/widgets/recharge_history_item.widget.dart';
 
 class MobileRechargeSection extends StatefulWidget {
   const MobileRechargeSection({super.key});

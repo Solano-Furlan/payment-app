@@ -49,8 +49,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        height: 60,
-                        width: 60,
+                        height: 50,
+                        width: 50,
                         decoration: const BoxDecoration(
                           color: AppColors.primary,
                           shape: BoxShape.circle,
@@ -59,16 +59,16 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: const Text(
                           '💶',
                           style: TextStyle(
-                            fontSize: 30,
+                            fontSize: 26,
                           ),
                         ),
                       ),
-                      const SizedBox(width: 8),
+                      const SizedBox(width: 12),
                       const UIText(
                         'Payment App',
                         maxLines: 1,
                         color: AppColors.onBackground,
-                        fontSize: 30,
+                        fontSize: 26,
                         fontWeight: FontWeight.w300,
                       ),
                     ],
@@ -76,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 60),
                   const UIText(
                     'Login',
-                    fontSize: 36,
+                    fontSize: 46,
                     fontWeight: FontWeight.w300,
                   ),
                   const Spacer(),
@@ -103,8 +103,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       child: UIButton(
                         text: 'Login',
-                        onPressed: () =>
-                            getIt<AppNavigationService>().routeToPayments(),
+                        onPressed: () => getIt<AppNavigationService>()
+                            .routeToMobileRecharge(),
                         isLoading: state is AuthenticationPinLoadingState,
                       ),
                     );
