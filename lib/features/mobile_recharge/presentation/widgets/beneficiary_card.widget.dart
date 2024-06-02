@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:payment_app/core/dependencies/dependencies.dart';
 import 'package:payment_app/core/design_system/helpers/screen_size.widget.helper.dart';
 import 'package:payment_app/core/design_system/theme/colors.dart';
 import 'package:payment_app/core/design_system/widgets/buttons/button.widget.dart';
 import 'package:payment_app/core/design_system/widgets/cards/core_card.widget.dart';
 import 'package:payment_app/core/design_system/widgets/texts/text.widget.dart';
+import 'package:payment_app/core/navigation/services/dialogs.service.dart';
+import 'package:payment_app/features/mobile_recharge/presentation/widgets/recharge_content.widget.dart';
 
 class BeneficiaryCard extends StatelessWidget {
   const BeneficiaryCard({super.key});
@@ -37,7 +40,9 @@ class BeneficiaryCard extends StatelessWidget {
           const Spacer(),
           UIButton(
             text: 'Recharge Now',
-            onPressed: () {},
+            onPressed: () => getIt<AppDialogsService>().showCoreBottomSheet(
+              content: const RechargeContent(),
+            ),
             height: 26,
             fontSize: 12,
           ),
