@@ -9,6 +9,6 @@ class AppTypography {
     fontWeight: FontWeight.normal,
     color: AppColors.onBackground,
     wordSpacing: 1,
-    height: 1.5,
+    height: 1,
   );
 }

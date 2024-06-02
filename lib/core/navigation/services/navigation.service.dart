@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:payment_app/core/navigation/routes/authentication.routes.dart';
+import 'package:payment_app/core/navigation/routes/payments.route.dart';
 
 class AppNavigationService {
   AppNavigationService({
@@ -36,5 +37,9 @@ class AppNavigationService {
 
   void routeToLogin() => _routeTo(
         AuthenticationRoutes.loginRoute,
+      );
+
+  void routeToPayments() => _routeTo(
+        PaymentsRoutes.paymentsRoute,
       );
 }

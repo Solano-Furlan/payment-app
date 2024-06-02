@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:payment_app/core/dependencies/dependencies.dart';
 import 'package:payment_app/core/design_system/theme/colors.dart';
 import 'package:payment_app/core/design_system/widgets/buttons/button.widget.dart';
 import 'package:payment_app/core/design_system/widgets/fields/text_field.widget.dart';
 import 'package:payment_app/core/design_system/widgets/layouts/main_scaffold.widget.dart';
 import 'package:payment_app/core/design_system/widgets/texts/text.widget.dart';
+import 'package:payment_app/core/navigation/services/navigation.service.dart';
 import 'package:payment_app/features/authentication/state/authentication/authentication.cubit.dart';
 import 'package:payment_app/features/authentication/state/authentication/authentication.state.dart';
 
@@ -101,7 +103,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       child: UIButton(
                         text: 'Login',
-                        onPressed: () {},
+                        onPressed: () =>
+                            getIt<AppNavigationService>().routeToPayments(),
                         isLoading: state is AuthenticationPinLoadingState,
                       ),
                     );

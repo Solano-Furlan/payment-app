@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:glass_kit/glass_kit.dart';
+import 'package:payment_app/core/design_system/helpers/screen_size.widget.helper.dart';
 import 'package:payment_app/core/design_system/theme/colors.dart';
 import 'package:payment_app/core/design_system/widgets/texts/text.widget.dart';
 
 class UIMainHeader extends StatelessWidget {
   const UIMainHeader({
-    this.height = 120,
+    this.height = 78,
     this.child,
     this.isProtected = true,
     super.key,
@@ -33,69 +34,83 @@ class UIMainHeader extends StatelessWidget {
             borderColor: AppColors.background,
             blur: 7,
             width: MediaQuery.of(context).size.width,
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-                border: Border.all(
-                  width: 1.5,
-                  color: AppColors.border,
-                ),
-                borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(26),
-                  bottomRight: Radius.circular(26),
-                ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  if (isProtected) ...[
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 16,
-                      ),
-                      child: Row(
-                        children: [
-                          Row(
+            child: Stack(
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    border: Border.all(
+                      width: 1.5,
+                      color: AppColors.border,
+                    ),
+                    borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(26),
+                      bottomRight: Radius.circular(26),
+                    ),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (isProtected) ...[
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 16,
+                          ),
+                          child: Row(
                             children: [
-                              Container(
-                                height: 40,
-                                width: 40,
-                                decoration: const BoxDecoration(
-                                  color: AppColors.dark1,
-                                  shape: BoxShape.circle,
-                                ),
-                                alignment: Alignment.center,
-                                child: const Text(
-                                  '💶',
-                                  style: TextStyle(
-                                    fontSize: 24,
+                              Row(
+                                children: [
+                                  Container(
+                                    height: 40,
+                                    width: 40,
+                                    decoration: const BoxDecoration(
+                                      color: AppColors.primary,
+                                      shape: BoxShape.circle,
+                                    ),
+                                    alignment: Alignment.center,
+                                    child: const Text(
+                                      '💶',
+                                      style: TextStyle(
+                                        fontSize: 24,
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
-                              const SizedBox(width: 8),
-                              const UIText(
-                                'Payment App',
-                                maxLines: 1,
-                                color: AppColors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
+                                  const SizedBox(width: 8),
+                                  const UIText(
+                                    'Payment App',
+                                    maxLines: 1,
+                                    color: AppColors.onBackground,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ],
                               ),
                             ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
+                      if (child != null) ...[
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: child!,
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+                Positioned(
+                  top: 0,
+                  child: Container(
+                    color: AppColors.background,
+                    width: ScreenSizeHelper.getScreenWidth(
+                      context: context,
                     ),
-                  ],
-                  if (child != null) ...[
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: child!,
-                    ),
-                  ],
-                ],
-              ),
+                    height: 2,
+                  ),
+                ),
+              ],
             ),
           ),
         ),
