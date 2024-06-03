@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:payment_app/core/design_system/helpers/screen_size.widget.helper.dart';
 import 'package:payment_app/core/design_system/theme/colors.dart';
 import 'package:payment_app/core/design_system/widgets/buttons/back_button.widget.dart';
@@ -6,6 +7,8 @@ import 'package:payment_app/core/design_system/widgets/buttons/button.widget.dar
 import 'package:payment_app/core/design_system/widgets/buttons/icon_button.widget.dart';
 import 'package:payment_app/core/design_system/widgets/layouts/bottom_app_bar.widget.dart';
 import 'package:payment_app/core/design_system/widgets/layouts/main_header.widget.dart';
+import 'package:payment_app/features/authentication/state/authentication/authentication.cubit.dart';
+import 'package:payment_app/features/authentication/state/authentication/authentication.state.dart';
 
 class UIMainScaffold extends StatelessWidget {
   const UIMainScaffold({
@@ -14,6 +17,7 @@ class UIMainScaffold extends StatelessWidget {
     this.hasSafeArea = true,
     this.webWrapperEnabled = true,
     this.canPop = true,
+    this.isProtected = true,
     this.backgroundColor,
     this.actionIconButton1,
     this.actionIconButton2,
@@ -34,78 +38,90 @@ class UIMainScaffold extends StatelessWidget {
   final UIButton? actionButton;
   final UIMainHeader? mainHeader;
   final UIBottomAppBar? bottomAppBar;
+  final bool isProtected;
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      canPop: canPop,
-      child: Scaffold(
-        backgroundColor: backgroundColor ?? AppColors.background,
-        body: Stack(
-          children: [
-            SizedBox(
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height,
-              child: SafeArea(
-                top: hasSafeArea,
-                left: hasSafeArea,
-                right: hasSafeArea,
-                bottom: hasSafeArea,
-                child: body,
-              ),
-            ),
-            if (mainHeader != null) ...[
-              Positioned(
-                top: 0,
-                child: mainHeader!,
-              ),
-            ],
-            if (hasActionsButtons) ...[
-              Positioned(
-                top: 16,
-                child: SafeArea(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Row(
-                      children: [
-                        if (backButton != null) ...[
-                          backButton!,
-                        ],
-                        const Spacer(),
-                        if (actionIconButton1 != null) ...[
-                          actionIconButton1!,
-                        ],
-                        if (actionIconButton2 != null) ...[
-                          const SizedBox(width: 8),
-                          actionIconButton2!,
-                        ],
-                        if (actionButton != null) ...[
-                          const SizedBox(width: 8),
-                          actionButton!,
-                        ],
-                      ],
+    return BlocBuilder<AuthenticationCubit, AuthenticationState>(
+      builder: (
+        BuildContext context,
+        AuthenticationState state,
+      ) {
+        if (state is! AuthenticationAuthorizedState && isProtected) {
+          return const SizedBox();
+        }
+        return Form(
+          canPop: canPop,
+          child: Scaffold(
+            backgroundColor: backgroundColor ?? AppColors.background,
+            body: Stack(
+              children: [
+                SizedBox(
+                  width: double.infinity,
+                  height: MediaQuery.of(context).size.height,
+                  child: SafeArea(
+                    top: hasSafeArea,
+                    left: hasSafeArea,
+                    right: hasSafeArea,
+                    bottom: hasSafeArea,
+                    child: body,
+                  ),
+                ),
+                if (mainHeader != null) ...[
+                  Positioned(
+                    top: 0,
+                    child: mainHeader!,
+                  ),
+                ],
+                if (hasActionsButtons) ...[
+                  Positioned(
+                    top: 16,
+                    child: SafeArea(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Row(
+                          children: [
+                            if (backButton != null) ...[
+                              backButton!,
+                            ],
+                            const Spacer(),
+                            if (actionIconButton1 != null) ...[
+                              actionIconButton1!,
+                            ],
+                            if (actionIconButton2 != null) ...[
+                              const SizedBox(width: 8),
+                              actionIconButton2!,
+                            ],
+                            if (actionButton != null) ...[
+                              const SizedBox(width: 8),
+                              actionButton!,
+                            ],
+                          ],
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ),
-            ],
-            if (bottomAppBar != null) ...[
-              Positioned(
-                bottom: 10,
-                child: SafeArea(
-                  child: Container(
-                    width: ScreenSizeHelper.getScreenWidth(context: context),
-                    height: 80,
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: bottomAppBar!,
+                ],
+                if (bottomAppBar != null) ...[
+                  Positioned(
+                    bottom: 10,
+                    child: SafeArea(
+                      child: Container(
+                        width:
+                            ScreenSizeHelper.getScreenWidth(context: context),
+                        height: 80,
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: bottomAppBar!,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ],
-          ],
-        ),
-      ),
+                ],
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 

@@ -73,6 +73,10 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     }
   }
 
+  void logout() {
+    emit(AuthenticationUnauthorizedState());
+  }
+
   void _updateUserRecharges({
     required RechargeInfo rechargeInfo,
   }) {

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:glass_kit/glass_kit.dart';
 import 'package:payment_app/core/dependencies/dependencies.dart';
+import 'package:payment_app/core/design_system/helpers/asset_svgs.helper.dart';
 import 'package:payment_app/core/design_system/helpers/screen_size.widget.helper.dart';
 import 'package:payment_app/core/design_system/theme/colors.dart';
+import 'package:payment_app/core/design_system/widgets/buttons/icon_button.widget.dart';
 import 'package:payment_app/core/design_system/widgets/texts/text.widget.dart';
+import 'package:payment_app/core/navigation/services/dialogs.service.dart';
+import 'package:payment_app/core/navigation/services/navigation.service.dart';
 import 'package:payment_app/features/authentication/state/authentication/authentication.cubit.dart';
 
 class UIMainHeader extends StatelessWidget {
@@ -62,32 +66,49 @@ class UIMainHeader extends StatelessWidget {
                           ),
                           child: Row(
                             children: [
-                              Row(
-                                children: [
-                                  Container(
-                                    height: 40,
-                                    width: 40,
-                                    decoration: const BoxDecoration(
-                                      color: AppColors.primary,
-                                      shape: BoxShape.circle,
-                                    ),
-                                    alignment: Alignment.center,
-                                    child: const Text(
-                                      '💶',
-                                      style: TextStyle(
-                                        fontSize: 24,
+                              Expanded(
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      height: 40,
+                                      width: 40,
+                                      decoration: const BoxDecoration(
+                                        color: AppColors.primary,
+                                        shape: BoxShape.circle,
+                                      ),
+                                      alignment: Alignment.center,
+                                      child: const Text(
+                                        '💶',
+                                        style: TextStyle(
+                                          fontSize: 24,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  const SizedBox(width: 8),
-                                  UIText(
-                                    getIt<AuthenticationCubit>().user.name,
-                                    maxLines: 1,
-                                    color: AppColors.onBackground,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ],
+                                    const SizedBox(width: 8),
+                                    UIText(
+                                      getIt<AuthenticationCubit>().user.name,
+                                      maxLines: 1,
+                                      color: AppColors.onBackground,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    const SizedBox(width: 2),
+                                    if (getIt<AuthenticationCubit>()
+                                        .user
+                                        .isVerified)
+                                      const Icon(
+                                        Icons.check,
+                                        size: 20,
+                                        color: AppColors.onBackground,
+                                      ),
+                                  ],
+                                ),
+                              ),
+                              UIIconButton(
+                                backgroundColor:
+                                    AppColors.onBackground.withOpacity(.3),
+                                onPressed: _logut,
+                                svgIconPath: AssetSvgsHelper.logout,
                               ),
                             ],
                           ),
@@ -119,4 +140,13 @@ class UIMainHeader extends StatelessWidget {
       ),
     );
   }
+
+  void _logut() => getIt<AppDialogsService>().showConfirmationDialog(
+        title: 'Logout',
+        text: 'Are you sure that you want to logout?',
+        onConfirmation: () {
+          getIt<AuthenticationCubit>().logout();
+          getIt<AppNavigationService>().routeToLogin();
+        },
+      );
 }

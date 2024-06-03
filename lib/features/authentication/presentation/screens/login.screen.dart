@@ -38,6 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
       builder: (BuildContext context, AuthenticationState state) {
         return UIMainScaffold(
           canPop: false,
+          isProtected: false,
           body: Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 20,

@@ -59,7 +59,7 @@ class UIConfirmationDialog extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: UIText(
                   text,
-                  color: AppColors.white,
+                  color: AppColors.onBackground,
                   fontSize: 20,
                   textAlign: TextAlign.center,
                 ),
