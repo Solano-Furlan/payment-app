@@ -38,7 +38,7 @@ class UIEmptyListIndicator extends StatelessWidget {
             child: UIText(
               text ?? 'No items found.',
               textAlign: TextAlign.center,
-              color: AppColors.white,
+              color: AppColors.onBackground,
               fontWeight: FontWeight.w500,
             ),
           ),
