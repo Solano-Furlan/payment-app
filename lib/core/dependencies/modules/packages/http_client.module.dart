@@ -9,6 +9,19 @@ abstract class HttpClientModule {
     final Dio dio = Dio();
     dio.options.baseUrl = EnvironmentService.baseUrl;
 
+    dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) async {
+          await Future.delayed(
+            const Duration(
+              milliseconds: 1600,
+            ),
+          );
+          return handler.next(options);
+        },
+      ),
+    );
+
     return dio;
   }
 }

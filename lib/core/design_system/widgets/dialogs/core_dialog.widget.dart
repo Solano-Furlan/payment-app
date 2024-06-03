@@ -76,7 +76,7 @@ class UICoreDialog extends StatelessWidget {
                 child: Text(
                   title,
                   style: const TextStyle(
-                    color: AppColors.white,
+                    color: AppColors.onBackground,
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),

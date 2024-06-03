@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:payment_app/core/dependencies/dependencies.dart';
@@ -7,6 +8,7 @@ import 'package:payment_app/core/design_system/widgets/buttons/button.widget.dar
 import 'package:payment_app/core/design_system/widgets/fields/text_field.widget.dart';
 import 'package:payment_app/core/design_system/widgets/layouts/main_scaffold.widget.dart';
 import 'package:payment_app/core/design_system/widgets/texts/text.widget.dart';
+import 'package:payment_app/core/navigation/services/dialogs.service.dart';
 import 'package:payment_app/core/navigation/services/navigation.service.dart';
 import 'package:payment_app/features/authentication/state/authentication/authentication.cubit.dart';
 import 'package:payment_app/features/authentication/state/authentication/authentication.state.dart';
@@ -103,9 +105,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       child: UIButton(
                         text: 'Login',
-                        onPressed: () => getIt<AppNavigationService>()
-                            .routeToMobileRecharge(),
-                        isLoading: state is AuthenticationPinLoadingState,
+                        onPressed: () => _login(
+                          context: context,
+                        ),
+                        isLoading: state is AuthenticationLoadingState,
                       ),
                     );
                   }),
@@ -116,5 +119,28 @@ class _LoginScreenState extends State<LoginScreen> {
         );
       },
     );
+  }
+
+  Future<void> _login({
+    required BuildContext context,
+  }) async {
+    if (_formKey.currentState?.validate() ?? false) {
+      final AuthenticationState authenticationState =
+          await context.read<AuthenticationCubit>().login(
+                email: _emailController.text.trim().toLowerCase(),
+                password: _passwordController.text,
+              );
+
+      if (authenticationState is AuthenticationAuthorizedState) {
+        getIt<AppNavigationService>().routeToMobileRecharge();
+      }
+      if (authenticationState is AuthenticationErrorState) {
+        getIt<AppDialogsService>().showErrorDialog(
+          title: 'Login Failed',
+          text:
+              'Failed to login, please check your email, password and internet.',
+        );
+      }
+    }
   }
 }

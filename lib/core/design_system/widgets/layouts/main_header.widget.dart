@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:glass_kit/glass_kit.dart';
+import 'package:payment_app/core/dependencies/dependencies.dart';
 import 'package:payment_app/core/design_system/helpers/screen_size.widget.helper.dart';
 import 'package:payment_app/core/design_system/theme/colors.dart';
 import 'package:payment_app/core/design_system/widgets/texts/text.widget.dart';
+import 'package:payment_app/features/authentication/state/authentication/authentication.cubit.dart';
 
 class UIMainHeader extends StatelessWidget {
   const UIMainHeader({
@@ -78,8 +80,8 @@ class UIMainHeader extends StatelessWidget {
                                     ),
                                   ),
                                   const SizedBox(width: 8),
-                                  const UIText(
-                                    'Payment App',
+                                  UIText(
+                                    getIt<AuthenticationCubit>().user.name,
                                     maxLines: 1,
                                     color: AppColors.onBackground,
                                     fontSize: 20,

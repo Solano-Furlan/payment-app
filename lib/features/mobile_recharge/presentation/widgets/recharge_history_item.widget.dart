@@ -1,16 +1,21 @@
 import 'package:flutter/cupertino.dart';
+import 'package:payment_app/core/design_system/helpers/date.helper.dart';
 import 'package:payment_app/core/design_system/theme/colors.dart';
 import 'package:payment_app/core/design_system/widgets/cards/core_card.widget.dart';
 import 'package:payment_app/core/design_system/widgets/texts/text.widget.dart';
+import 'package:payment_app/features/user/domain/models/recharge_info.model.dart';
 
 class RechargeHistoryItem extends StatelessWidget {
   const RechargeHistoryItem({
+    required this.rechargeInfo,
     super.key,
   });
 
+  final RechargeInfo rechargeInfo;
+
   @override
   Widget build(BuildContext context) {
-    return const UICoreCard(
+    return UICoreCard(
       child: Row(
         children: [
           Expanded(
@@ -18,21 +23,23 @@ class RechargeHistoryItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 UIText(
-                  'Beneficiary',
+                  rechargeInfo.beneficiary.name,
                   color: AppColors.primary,
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
-                SizedBox(height: 4),
+                const SizedBox(height: 4),
                 UIText(
-                  '+372 6272 8025',
+                  rechargeInfo.beneficiary.phoneNumber,
                   color: AppColors.onBackground,
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
                 ),
-                SizedBox(height: 4),
+                const SizedBox(height: 4),
                 UIText(
-                  '14:30 PM',
+                  DateFormatterHelper.smartDate(
+                    date: rechargeInfo.date,
+                  ),
                   color: AppColors.onBackground,
                   fontSize: 12,
                   fontWeight: FontWeight.w400,
@@ -41,7 +48,7 @@ class RechargeHistoryItem extends StatelessWidget {
             ),
           ),
           UIText(
-            '€ 40.00',
+            'د.إ ${rechargeInfo.amount.toStringAsFixed(2)}',
             color: AppColors.onBackground,
             fontSize: 16,
             fontWeight: FontWeight.bold,

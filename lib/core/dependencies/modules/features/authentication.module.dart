@@ -1,20 +1,17 @@
-import 'package:hive/hive.dart';
 import 'package:injectable/injectable.dart';
-import 'package:local_auth/local_auth.dart';
-import 'package:payment_app/features/authentication/data/authentication.repository.dart';
+import 'package:payment_app/core/event_bus/event_bus.service.dart';
+import 'package:payment_app/features/authentication/state/authentication/authentication.cubit.dart';
+import 'package:payment_app/features/user/data/repositories/user.repository.dart';
 
 @module
 abstract class AuthenticationModule {
   @lazySingleton
-  LocalAuthentication localAuthentication() => LocalAuthentication();
-
-  @lazySingleton
-  AuthenticationRepository authenticationRepository(
-    LocalAuthentication localAuthentication,
-    HiveInterface hive,
+  AuthenticationCubit authenticationCubit(
+    UserRepository userRepostory,
+    EventBus eventBus,
   ) =>
-      AuthenticationRepository(
-        localAuthentication: localAuthentication,
-        hive: hive,
-      );
+      AuthenticationCubit(
+        userRepostory: userRepostory,
+        eventBus: eventBus,
+      )..initialize();
 }

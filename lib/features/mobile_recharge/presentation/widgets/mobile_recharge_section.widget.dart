@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:payment_app/core/dependencies/dependencies.dart';
 import 'package:payment_app/core/design_system/theme/colors.dart';
 import 'package:payment_app/core/design_system/widgets/buttons/toggle_button.widget.dart';
 import 'package:payment_app/core/design_system/widgets/texts/text.widget.dart';
+import 'package:payment_app/features/authentication/state/authentication/authentication.cubit.dart';
+import 'package:payment_app/features/authentication/state/authentication/authentication.state.dart';
 import 'package:payment_app/features/mobile_recharge/presentation/widgets/beneficiary_card.widget.dart';
 import 'package:payment_app/features/mobile_recharge/presentation/widgets/recharge_history_item.widget.dart';
 
@@ -70,25 +74,37 @@ class _MobileRechargeSectionState extends State<MobileRechargeSection> {
             physics: const BouncingScrollPhysics(),
             separatorBuilder: (BuildContext context, int index) =>
                 const SizedBox(width: 8),
-            itemCount: 5,
-            itemBuilder: (BuildContext context, int index) =>
-                const BeneficiaryCard(),
+            itemCount: getIt<AuthenticationCubit>().user.beneficiaries.length,
+            itemBuilder: (BuildContext context, int index) => BeneficiaryCard(
+              beneficiary:
+                  getIt<AuthenticationCubit>().user.beneficiaries[index],
+            ),
           ),
         );
       case ToggleSectionButtonType.section2:
-        return Column(
-          children: List.generate(
-            10,
-            (int index) => const Padding(
-              padding: EdgeInsets.only(
-                right: 12,
-                left: 12,
-                bottom: 4,
-                top: 4,
+        return BlocBuilder<AuthenticationCubit, AuthenticationState>(
+          builder: (
+            BuildContext context,
+            AuthenticationState state,
+          ) {
+            return Column(
+              children: List.generate(
+                getIt<AuthenticationCubit>().user.rechargeInfos.length,
+                (int index) => Padding(
+                  padding: const EdgeInsets.only(
+                    right: 12,
+                    left: 12,
+                    bottom: 4,
+                    top: 4,
+                  ),
+                  child: RechargeHistoryItem(
+                    rechargeInfo:
+                        getIt<AuthenticationCubit>().user.rechargeInfos[index],
+                  ),
+                ),
               ),
-              child: RechargeHistoryItem(),
-            ),
-          ),
+            );
+          },
         );
     }
   }

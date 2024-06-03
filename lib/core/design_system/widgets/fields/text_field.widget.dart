@@ -105,7 +105,7 @@ class UITextFieldState extends State<UITextField> {
                   inputFormatters: widget.inputFormatters,
                   controller: widget.controller,
                   keyboardType: widget.keyboardType,
-                  textCapitalization: TextCapitalization.sentences,
+                  textCapitalization: TextCapitalization.none,
                   maxLength: widget.maxLength,
                   onChanged: (String val) {
                     if (widget.onChanged != null) {
