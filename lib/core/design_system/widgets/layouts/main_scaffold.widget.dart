@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:payment_app/core/design_system/helpers/screen_size.widget.helper.dart';
 import 'package:payment_app/core/design_system/theme/colors.dart';
-import 'package:payment_app/core/design_system/widgets/buttons/back_button.widget.dart';
-import 'package:payment_app/core/design_system/widgets/buttons/button.widget.dart';
-import 'package:payment_app/core/design_system/widgets/buttons/icon_button.widget.dart';
-import 'package:payment_app/core/design_system/widgets/layouts/bottom_app_bar.widget.dart';
 import 'package:payment_app/core/design_system/widgets/layouts/main_header.widget.dart';
 import 'package:payment_app/features/authentication/state/authentication/authentication.cubit.dart';
 import 'package:payment_app/features/authentication/state/authentication/authentication.state.dart';
@@ -13,31 +8,21 @@ import 'package:payment_app/features/authentication/state/authentication/authent
 class UIMainScaffold extends StatelessWidget {
   const UIMainScaffold({
     required this.body,
-    this.backButton,
     this.hasSafeArea = true,
     this.webWrapperEnabled = true,
     this.canPop = true,
     this.isProtected = true,
     this.backgroundColor,
-    this.actionIconButton1,
-    this.actionIconButton2,
-    this.actionButton,
     this.mainHeader,
-    this.bottomAppBar,
     super.key,
   });
 
   final Widget body;
-  final UIBackButton? backButton;
   final bool hasSafeArea;
   final bool webWrapperEnabled;
   final bool canPop;
   final Color? backgroundColor;
-  final UIIconButton? actionIconButton1;
-  final UIIconButton? actionIconButton2;
-  final UIButton? actionButton;
   final UIMainHeader? mainHeader;
-  final UIBottomAppBar? bottomAppBar;
   final bool isProtected;
 
   @override
@@ -73,50 +58,6 @@ class UIMainScaffold extends StatelessWidget {
                     child: mainHeader!,
                   ),
                 ],
-                if (hasActionsButtons) ...[
-                  Positioned(
-                    top: 16,
-                    child: SafeArea(
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Row(
-                          children: [
-                            if (backButton != null) ...[
-                              backButton!,
-                            ],
-                            const Spacer(),
-                            if (actionIconButton1 != null) ...[
-                              actionIconButton1!,
-                            ],
-                            if (actionIconButton2 != null) ...[
-                              const SizedBox(width: 8),
-                              actionIconButton2!,
-                            ],
-                            if (actionButton != null) ...[
-                              const SizedBox(width: 8),
-                              actionButton!,
-                            ],
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-                if (bottomAppBar != null) ...[
-                  Positioned(
-                    bottom: 10,
-                    child: SafeArea(
-                      child: Container(
-                        width:
-                            ScreenSizeHelper.getScreenWidth(context: context),
-                        height: 80,
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: bottomAppBar!,
-                      ),
-                    ),
-                  ),
-                ],
               ],
             ),
           ),
@@ -124,11 +65,4 @@ class UIMainScaffold extends StatelessWidget {
       },
     );
   }
-
-  bool get hasActionsButtons =>
-      (backButton != null ||
-          actionIconButton1 != null ||
-          actionButton != null ||
-          actionIconButton2 != null) &&
-      mainHeader == null;
 }

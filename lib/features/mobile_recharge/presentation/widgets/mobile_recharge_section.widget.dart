@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:payment_app/core/dependencies/dependencies.dart';
 import 'package:payment_app/core/design_system/theme/colors.dart';
 import 'package:payment_app/core/design_system/widgets/buttons/toggle_button.widget.dart';
+import 'package:payment_app/core/design_system/widgets/indicators/empty_list_indicator.widget.dart';
 import 'package:payment_app/core/design_system/widgets/texts/text.widget.dart';
 import 'package:payment_app/features/authentication/state/authentication/authentication.cubit.dart';
 import 'package:payment_app/features/authentication/state/authentication/authentication.state.dart';
@@ -82,6 +83,16 @@ class _MobileRechargeSectionState extends State<MobileRechargeSection> {
           ),
         );
       case ToggleSectionButtonType.section2:
+        if (getIt<AuthenticationCubit>().user.rechargeInfos.isEmpty) {
+          return const Padding(
+            padding: EdgeInsets.only(top: 30),
+            child: Center(
+              child: UIEmptyListIndicator(
+                text: 'You have not done any mobile recharges yet.',
+              ),
+            ),
+          );
+        }
         return BlocBuilder<AuthenticationCubit, AuthenticationState>(
           builder: (
             BuildContext context,
