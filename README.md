@@ -23,7 +23,7 @@ Feature based clean architecture. Each feature has four layers/folders (domain, 
 * Presentation: UI Screen & Widgets/Components
 
 ## API/Backend
-Mocker http client API responses with DioAdapater
+Mocked http client API responses with DioAdapater to simulate the payments API.
 
 ## State Management
 [Cubits](https://pub.dev/packages/flutter_bloc) are used for efficient state management, ensuring a seamless and reactive user experience. Cubits, part of the Bloc library, provide a straightforward and scalable approach to managing application state.
