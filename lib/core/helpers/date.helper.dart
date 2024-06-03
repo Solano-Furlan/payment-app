@@ -77,20 +77,10 @@ class DateHelper {
     );
   }
 
-  static String calculateAge(DateTime birthDate) {
-    DateTime currentDate = DateTime.now();
-    int age = currentDate.year - birthDate.year;
-    int month1 = currentDate.month;
-    int month2 = birthDate.month;
-    if (month2 > month1) {
-      age--;
-    } else if (month1 == month2) {
-      int day1 = currentDate.day;
-      int day2 = birthDate.day;
-      if (day2 > day1) {
-        age--;
-      }
-    }
-    return age.toString();
+  static bool isSameMonthAndYear({
+    required DateTime date1,
+    required DateTime date2,
+  }) {
+    return date1.year == date2.year && date1.month == date2.month;
   }
 }

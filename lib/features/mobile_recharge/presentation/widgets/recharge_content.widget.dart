@@ -148,14 +148,17 @@ class _RechargeContentState extends State<RechargeContent> {
 
   Future<void> _rechargeMobile() async {
     if (_selectedRechargeData != null) {
-      final MobileRechargeState mobileRechargeState =
-          await context.read<MobileRechargeCubit>().rechargeMobile(
-                mobileRechargeDto: MobileRechargeDto(
-                  amount: _selectedRechargeData!.amount,
-                  beneficiary: widget.beneficiary,
-                  currentUserBalance: getIt<AuthenticationCubit>().user.balance,
-                ),
-              );
+      final MobileRechargeState mobileRechargeState = await context
+          .read<MobileRechargeCubit>()
+          .rechargeMobile(
+            mobileRechargeDto: MobileRechargeDto(
+              amount: _selectedRechargeData!.amount,
+              beneficiary: widget.beneficiary,
+              currentUserBalance: getIt<AuthenticationCubit>().user.balance,
+              isUserVerified: getIt<AuthenticationCubit>().user.isVerified,
+              rechargeInfos: getIt<AuthenticationCubit>().user.rechargeInfos,
+            ),
+          );
 
       if (mobileRechargeState is MobileRechargeSuccessState) {
         getIt<AppNavigationService>().pop();
@@ -164,6 +167,27 @@ class _RechargeContentState extends State<RechargeContent> {
         getIt<AppDialogsService>().showErrorDialog(
           title: 'Recharge Failed',
           text: 'Failed to recharge, please check your internet connection.',
+        );
+      }
+      if (mobileRechargeState is MobileRechargeBalanceErrorState) {
+        getIt<AppDialogsService>().showErrorDialog(
+          title: 'Insufficient Funds',
+          text: 'Failed to recharge, you don\'t have enough funds.',
+        );
+      }
+      if (mobileRechargeState is MobileRechargeMonthlyLimitErrorState) {
+        getIt<AppDialogsService>().showErrorDialog(
+          title: 'Limit Reached',
+          text: 'You have reached the recharge limit of 3000 AED this month.',
+        );
+      }
+      if (mobileRechargeState is MobileRechargeBeneficiaryLimitErrorState) {
+        final bool isUserVerified =
+            getIt<AuthenticationCubit>().user.isVerified;
+        getIt<AppDialogsService>().showErrorDialog(
+          title: 'Beneficiary Limit Reached',
+          text:
+              'You have reached the recharge limit of ${isUserVerified ? 500 : 1000} AED this month.',
         );
       }
     }

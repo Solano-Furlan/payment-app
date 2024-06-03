@@ -72,5 +72,40 @@ class UserRepositoryMockData {
         },
       ],
     },
+    {
+      'id': '2',
+      'name': 'Tom Rogan',
+      'email': 'low.balance@gmail.com',
+      'password': '123456',
+      'balance': 140.30,
+      'isVerified': false,
+      'beneficiaries': [
+        {
+          'id': '6',
+          'name': 'Linda Jones',
+          'phoneNumber': '(555) 555-0105',
+        },
+        {
+          'id': '7',
+          'name': 'James Wilson',
+          'phoneNumber': '(555) 555-0106',
+        },
+        {
+          'id': '8',
+          'name': 'Barbara Moore',
+          'phoneNumber': '(555) 555-0107',
+        },
+        {
+          'id': '9',
+          'name': 'Paul Taylor',
+          'phoneNumber': '(555) 555-0108',
+        },
+        {
+          'id': '10',
+          'name': 'Nancy Anderson',
+          'phoneNumber': '(555) 555-0109',
+        },
+      ],
+    },
   ];
 }

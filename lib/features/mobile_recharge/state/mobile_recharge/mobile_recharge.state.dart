@@ -17,6 +17,21 @@ class MobileRechargeSuccessState extends MobileRechargeState {
   List<Object?> get props => [];
 }
 
+class MobileRechargeBeneficiaryLimitErrorState extends MobileRechargeState {
+  @override
+  List<Object?> get props => [];
+}
+
+class MobileRechargeMonthlyLimitErrorState extends MobileRechargeState {
+  @override
+  List<Object?> get props => [];
+}
+
+class MobileRechargeBalanceErrorState extends MobileRechargeState {
+  @override
+  List<Object?> get props => [];
+}
+
 class MobileRechargeErrorState extends MobileRechargeState {
   @override
   List<Object?> get props => [];
